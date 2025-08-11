@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { use, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { useState } from 'react';
 const LocationDetector = () => {
     const [loading, setLoading] = useState(false);
@@ -10,21 +10,37 @@ const LocationDetector = () => {
     const searchParams = useSearchParams()
     const router = useRouter();
 
+    // useEffect(() => {
+    //     setLoading(true);
+    //     const params = new URLSearchParams(searchParams)
+
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition((position) => {
+    //             params.set('latitude', position.coords.latitude);
+    //             params.set('longitude', position.coords.longitude);
+    //             setLoading(false);
+    //             router.push(`/current?${params.toString()}`);
+    //         })
+    //     }
+
+
+    // }, [searchParams, router]);
+
     useEffect(() => {
-        setLoading(true);
-        const params = new URLSearchParams(searchParams)
+  setLoading(true);
+  const params = new URLSearchParams(searchParams?.toString());
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                params.set('latitude', position.coords.latitude);
-                params.set('longitude', position.coords.longitude);
-                setLoading(false);
-                router.push(`/current?${params.toString()}`);
-            })
-        }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      params.set('latitude', position.coords.latitude);
+      params.set('longitude', position.coords.longitude);
+      setLoading(false);
+      router.push(`/current?${params.toString()}`);
+    });
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [router,searchParams]); // বা []
 
-
-    }, [searchParams, router]);
 
     console.log("Search Params:", searchParams);
 
