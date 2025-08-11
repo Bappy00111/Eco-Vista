@@ -1,4 +1,5 @@
 import LocationInfo from "@/components/LocationInfo";
+import NoLocationInfo from "@/components/NoLocationInfo";
 import { getResolvedLatLong } from "@/lib/location-info";
 
 const page = async ({
